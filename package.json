@@ -1,0 +1,14 @@
+{
+  "name": "bulaga",
+  "version": "1.0.0",
+  "description": "Voyeurer on Julius and Jean",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jean Claudette Ambait",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.10.6"
+  }
+}
