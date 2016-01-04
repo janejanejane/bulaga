@@ -22,6 +22,18 @@ var params = {
     ContentType: 'image/jpeg',
     ACL: 'public-read'
 };
+var dynamoDb = new aws.DynamoDB();
+var dynamoParams = {
+    TableName: 'bulaga-cam',
+    Item: {
+	id: {
+	    S: 'latest'
+	},
+	filename: {
+	    S: ''
+	}
+    }
+};
 
 // call spawn of child_process to execute snapshot command
 setInterval( function() {
@@ -56,6 +68,19 @@ setInterval( function() {
 	        if ( err ) {
 		    return callback( err );
 		}
+
+		data.params = params;
+		callback( null, data );
+	    });
+	},
+	function updateDynamoDb( s3File, callback ) {
+	    console.log( s3File );
+	    dynamoParams.Item.filename.S = s3File.params.Key;
+	    snapper.updateLatest( dynamoDb, dynamoParams, function( err, data ) {
+		if ( err ) {
+		    return callback( err );
+		}
+
 		callback( null, data );
 	    });
 	},
@@ -76,5 +101,5 @@ setInterval( function() {
     });
 
     console.log( 'inside interval' );
-}, 1000);
+}, 15000 );
 

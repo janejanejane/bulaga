@@ -30,6 +30,18 @@ var snapper = {
 	    }
 	});
     },
+    updateLatest: function( dynamoDb, dynamoParams, callback ) {
+	console.log( dynamoDb, dynamoParams );
+	dynamoDb.putItem( dynamoParams, function( err, data ) {
+	    if ( err ) {
+		console.log( 'Error updating dynamoDb: ', err );
+		return callback( err );
+	    } else {
+		console.log( 'Successfully updated!', data );
+		return callback( null, data );
+	    }
+	});
+    },
     read: function( filename, callback ) {
 	fs.readFile( fileLoc + filename + '.jpg', function( err, data ) {
 	    if ( err ) {
